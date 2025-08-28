@@ -6,8 +6,7 @@ A Flutter app that turns your Android phone into a wireless touchpad and mouse f
 
 ## Demo Video
 
-![Demo Video](https://drive.google.com/file/d/1RbrRG2gL8h_L7NehaLwd-6M6_27Rf9YZ/view?usp=sharing)  
-*Replace the URL with your hosted video or GIF link.*
+[▶️ Watch the demo](demo/demo.mp4)
 
 ---
 
