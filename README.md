@@ -48,7 +48,7 @@ Control the cursor, scroll, and click with gestures.
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/yourusername/phone-mouse-flutter.git
+git clone https://github.com/nikhar-tale/phone-mouse-flutter.git
 cd phone-mouse-flutter
 ```
 
