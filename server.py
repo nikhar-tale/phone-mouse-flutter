@@ -2,6 +2,9 @@
 import asyncio
 import json
 import time
+import socket
+import threading
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 import uvicorn
 import pyautogui
@@ -18,7 +21,37 @@ SENSITIVITY = 3.0
 # throttle updates to ~60fps
 FRAME_INTERVAL = 0.016  
 
-app = FastAPI()
+PORT = 8000
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    start_udp_broadcast_responder(PORT)
+    yield
+
+app = FastAPI(lifespan=lifespan)
+
+def start_udp_broadcast_responder(ws_port: int):
+    def responder():
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        try:
+            sock.bind(('0.0.0.0', 8002))
+            print(f"[UDP Responder] Listening on port 8002 for discovery...")
+            while True:
+                data, addr = sock.recvfrom(1024)
+                if data == b"DISCOVER_PHONE_MOUSE_REQUEST":
+                    print(f"[UDP Responder] Discovery request from {addr}")
+                    response = f"DISCOVER_PHONE_MOUSE_RESPONSE:{ws_port}".encode('utf-8')
+                    sock.sendto(response, addr)
+        except Exception as e:
+            print(f"[UDP Responder] Error: {e}")
+        finally:
+            sock.close()
+
+    thread = threading.Thread(target=responder, daemon=True)
+    thread.start()
+
+# Lifespan handles UDP discovery startup
 
 class ConnectionManager:
     def __init__(self):
@@ -89,6 +122,20 @@ async def websocket_endpoint(websocket: WebSocket):
                 amt = int(msg.get("amount", 0))
                 pyautogui.scroll(amt)
 
+            elif mtype == "keyboard":
+                key = msg.get("key", "")
+                try:
+                    if key == "backspace":
+                        pyautogui.press("backspace")
+                    elif key == "enter":
+                        pyautogui.press("enter")
+                    elif key == "space":
+                        pyautogui.press("space")
+                    elif len(key) == 1:
+                        pyautogui.write(key)
+                except Exception as e:
+                    print(f"Keyboard error: {e}")
+
             elif mtype == "ping":
                 await websocket.send_text('{"type":"pong"}')
 
@@ -102,4 +149,4 @@ async def websocket_endpoint(websocket: WebSocket):
         manager.disconnect()
 
 if __name__ == "__main__":
-    uvicorn.run("server:app", host="0.0.0.0", port=8000, log_level="info")
+    uvicorn.run("server:app", host="0.0.0.0", port=PORT, log_level="info")
