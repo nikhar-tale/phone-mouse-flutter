@@ -101,7 +101,7 @@ You have two choices to run the server on your computer:
 
 ## Session History & Future Roadmap
 
-To review design decisions, past session history, and technical blueprints for future features, check out [brainstorm_and_session_history.md](file:///C:/Nikhar/Flutter/phone-mouse-flutter/brainstorm_and_session_history.md).
+To review design decisions, past session history, and technical blueprints for future features, check out [brainstorm_and_session_history.md](brainstorm_and_session_history.md).
 
 ---
 
