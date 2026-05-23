@@ -739,6 +739,17 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
         _longPressTimer?.cancel();
       }
     }
+
+    // Handle mouse movement (1 finger) or scrolling (2 fingers) via raw pointer deltas.
+    // This bypasses the gesture arena, making the touchpad extremely robust in all screen orientations.
+    if (_activePointers.length == 1) {
+      _queueDelta(event.delta.dx, event.delta.dy);
+    } else if (_activePointers.length == 2) {
+      final scrollAmount = (-event.delta.dy * 0.5).round();
+      if (scrollAmount != 0) {
+        _sendScroll(scrollAmount);
+      }
+    }
   }
 
   void _handlePointerUp(PointerUpEvent event) {
@@ -1110,16 +1121,6 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                 onPointerCancel: _handlePointerCancel,
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onScaleUpdate: (details) {
-                    if (details.pointerCount == 1) {
-                      final delta = details.focalPointDelta;
-                      _queueDelta(delta.dx, delta.dy);
-                    } else if (details.pointerCount == 2) {
-                      final delta = details.focalPointDelta;
-                      final scrollAmount = (-delta.dy * 0.1).round();
-                      if (scrollAmount != 0) _sendScroll(scrollAmount);
-                    }
-                  },
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
