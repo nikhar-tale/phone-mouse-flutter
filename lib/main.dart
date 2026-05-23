@@ -1212,50 +1212,54 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                                   ),
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  PressableTrackpadButton(
-                                    label: 'LEFT CLICK',
-                                    button: 'left',
-                                    icon: Icons.mouse_outlined,
-                                    borderRadius: const BorderRadius.only(
-                                      bottomLeft: Radius.circular(18),
-                                    ),
-                                    border: const Border(
-                                      top: BorderSide(
-                                        color: Color(0xFF334155),
-                                        width: 1.5,
+                              SizedBox(
+                                height: 70,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    PressableTrackpadButton(
+                                      label: 'LEFT CLICK',
+                                      button: 'left',
+                                      icon: Icons.mouse_outlined,
+                                      borderRadius: const BorderRadius.only(
+                                        bottomLeft: Radius.circular(18),
                                       ),
-                                      right: BorderSide(
-                                        color: Color(0xFF334155),
-                                        width: 0.75,
+                                      border: const Border(
+                                        top: BorderSide(
+                                          color: Color(0xFF334155),
+                                          width: 1.5,
+                                        ),
+                                        right: BorderSide(
+                                          color: Color(0xFF334155),
+                                          width: 0.75,
+                                        ),
                                       ),
+                                      onClickChange: _sendClick,
                                     ),
-                                    onClickChange: _sendClick,
-                                  ),
-                                  _buildKeyboardMiddleButton(
-                                    isLandscape: false,
-                                  ),
-                                  PressableTrackpadButton(
-                                    label: 'RIGHT CLICK',
-                                    button: 'right',
-                                    icon: Icons.mouse,
-                                    borderRadius: const BorderRadius.only(
-                                      bottomRight: Radius.circular(18),
+                                    _buildKeyboardMiddleButton(
+                                      isLandscape: false,
                                     ),
-                                    border: const Border(
-                                      top: BorderSide(
-                                        color: Color(0xFF334155),
-                                        width: 1.5,
+                                    PressableTrackpadButton(
+                                      label: 'RIGHT CLICK',
+                                      button: 'right',
+                                      icon: Icons.mouse,
+                                      borderRadius: const BorderRadius.only(
+                                        bottomRight: Radius.circular(18),
                                       ),
-                                      left: BorderSide(
-                                        color: Color(0xFF334155),
-                                        width: 0.75,
+                                      border: const Border(
+                                        top: BorderSide(
+                                          color: Color(0xFF334155),
+                                          width: 1.5,
+                                        ),
+                                        left: BorderSide(
+                                          color: Color(0xFF334155),
+                                          width: 0.75,
+                                        ),
                                       ),
+                                      onClickChange: _sendClick,
                                     ),
-                                    onClickChange: _sendClick,
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
