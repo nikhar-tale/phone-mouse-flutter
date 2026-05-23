@@ -794,9 +794,12 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
   }
 
   Widget _buildHeaderPanel() {
+    final bool isTablet = MediaQuery.of(context).size.shortestSide > 550;
     return Container(
       margin: const EdgeInsets.only(top: 16, left: 16, right: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: isTablet
+          ? const EdgeInsets.symmetric(horizontal: 24, vertical: 12)
+          : const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         color: const Color(0xFF1E293B),
         borderRadius: BorderRadius.circular(16),
@@ -808,8 +811,8 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
           Row(
             children: [
               Container(
-                width: 8,
-                height: 8,
+                width: isTablet ? 10 : 8,
+                height: isTablet ? 10 : 8,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _connected
@@ -817,12 +820,12 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                       : const Color(0xFFF59E0B),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: isTablet ? 12 : 8),
               Text(
                 _connected ? 'Connected to ${widget.ip}' : 'Reconnecting...',
-                style: const TextStyle(
-                  color: Color(0xFFF8FAFC),
-                  fontSize: 13,
+                style: TextStyle(
+                  color: const Color(0xFFF8FAFC),
+                  fontSize: isTablet ? 15 : 13,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -833,7 +836,7 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                   color: _showSensitivity
                       ? const Color(0xFF6366F1)
                       : const Color(0xFF94A3B8),
-                  size: 20,
+                  size: isTablet ? 24 : 20,
                 ),
                 onPressed: () {
                   HapticFeedback.lightImpact();
@@ -843,10 +846,10 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                 },
               ),
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.power_settings_new_rounded,
                   color: Colors.redAccent,
-                  size: 20,
+                  size: isTablet ? 24 : 20,
                 ),
                 onPressed: () {
                   HapticFeedback.mediumImpact();
@@ -866,11 +869,11 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                     padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
                     child: Row(
                       children: [
-                        const Text(
+                        Text(
                           "Sensitivity",
                           style: TextStyle(
-                            color: Color(0xFF94A3B8),
-                            fontSize: 12,
+                            color: const Color(0xFF94A3B8),
+                            fontSize: isTablet ? 14 : 12,
                           ),
                         ),
                         Expanded(
@@ -901,10 +904,10 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                         ),
                         Text(
                           sensitivity.toStringAsFixed(1),
-                          style: const TextStyle(
-                            color: Color(0xFFF8FAFC),
+                          style: TextStyle(
+                            color: const Color(0xFFF8FAFC),
                             fontWeight: FontWeight.bold,
-                            fontSize: 12,
+                            fontSize: isTablet ? 14 : 12,
                           ),
                         ),
                       ],
@@ -918,8 +921,9 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
   }
 
   Widget _buildLandscapeHeaderPanel() {
+    final bool isTablet = MediaQuery.of(context).size.shortestSide > 550;
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: isTablet ? const EdgeInsets.all(16) : const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: const Color(0xFF1E293B),
         borderRadius: BorderRadius.circular(16),
@@ -932,8 +936,8 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
           Row(
             children: [
               Container(
-                width: 8,
-                height: 8,
+                width: isTablet ? 10 : 8,
+                height: isTablet ? 10 : 8,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _connected
@@ -942,12 +946,12 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                 ),
               ),
               const SizedBox(width: 6),
-              const Expanded(
+              Expanded(
                 child: Text(
                   'Connected',
                   style: TextStyle(
-                    color: Color(0xFFF8FAFC),
-                    fontSize: 11,
+                    color: const Color(0xFFF8FAFC),
+                    fontSize: isTablet ? 14 : 11,
                     fontWeight: FontWeight.bold,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -961,10 +965,10 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                     MaterialPageRoute(builder: (_) => const StartupScreen()),
                   );
                 },
-                child: const Icon(
+                child: Icon(
                   Icons.power_settings_new_rounded,
                   color: Colors.redAccent,
-                  size: 18,
+                  size: isTablet ? 22 : 18,
                 ),
               ),
             ],
@@ -972,15 +976,21 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
           const SizedBox(height: 8),
           Text(
             widget.ip,
-            style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 10),
+            style: TextStyle(
+              color: const Color(0xFF94A3B8),
+              fontSize: isTablet ? 13 : 10,
+            ),
             overflow: TextOverflow.ellipsis,
           ),
-          const Divider(color: Color(0xFF334155), height: 16),
-          const Text(
+          Divider(
+            color: const Color(0xFF334155),
+            height: isTablet ? 24 : 16,
+          ),
+          Text(
             "SENSITIVITY",
             style: TextStyle(
-              color: Color(0xFF94A3B8),
-              fontSize: 9,
+              color: const Color(0xFF94A3B8),
+              fontSize: isTablet ? 12 : 9,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -993,11 +1003,11 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                     inactiveTrackColor: const Color(0xFF334155),
                     thumbColor: const Color(0xFF6366F1),
                     trackHeight: 2,
-                    thumbShape: const RoundSliderThumbShape(
-                      enabledThumbRadius: 6,
+                    thumbShape: RoundSliderThumbShape(
+                      enabledThumbRadius: isTablet ? 8 : 6,
                     ),
-                    overlayShape: const RoundSliderOverlayShape(
-                      overlayRadius: 12,
+                    overlayShape: RoundSliderOverlayShape(
+                      overlayRadius: isTablet ? 16 : 12,
                     ),
                   ),
                   child: Slider(
@@ -1015,9 +1025,9 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
               ),
               Text(
                 sensitivity.toStringAsFixed(1),
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
-                  fontSize: 10,
+                  fontSize: isTablet ? 13 : 10,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -1030,12 +1040,13 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
 
   Widget _buildKeyboardMiddleButton({required bool isLandscape}) {
     final bool isActive = _keyboardFocusNode.hasFocus;
+    final bool isTablet = MediaQuery.of(context).size.shortestSide > 550;
     return GestureDetector(
       onTap: _toggleKeyboard,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 60),
-        width: isLandscape ? double.infinity : 64,
-        height: isLandscape ? 50 : 70,
+        width: isLandscape ? double.infinity : (isTablet ? 90 : 64),
+        height: isLandscape ? (isTablet ? 70 : 50) : (isTablet ? 90 : 70),
         decoration: BoxDecoration(
           color: isActive ? const Color(0xFF334155) : const Color(0xFF1E293B),
           border: Border(
@@ -1060,7 +1071,7 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
               color: isActive
                   ? const Color(0xFF6366F1)
                   : const Color(0xFF94A3B8),
-              size: 20,
+              size: isTablet ? 26 : 20,
             ),
             const SizedBox(height: 4),
             Text(
@@ -1069,7 +1080,7 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                 color: isActive
                     ? const Color(0xFFF8FAFC)
                     : const Color(0xFF94A3B8),
-                fontSize: 10,
+                fontSize: isTablet ? 12 : 10,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.5,
               ),
@@ -1081,6 +1092,7 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
   }
 
   Widget _buildTouchpadArea(BorderRadius borderRadius) {
+    final bool isTablet = MediaQuery.of(context).size.shortestSide > 550;
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF0F172A),
@@ -1114,7 +1126,7 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                       children: [
                         Icon(
                           Icons.fingerprint_rounded,
-                          size: 48,
+                          size: isTablet ? 64 : 48,
                           color: const Color(0x806366F1),
                         ),
                         const SizedBox(height: 12),
@@ -1124,7 +1136,7 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                               : 'Drag finger to move pointer\nUse two fingers to scroll',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 13,
+                            fontSize: isTablet ? 15 : 13,
                             color: _isLongPressing
                                 ? const Color(0xFFEF4444)
                                 : const Color(0xFF94A3B8),
@@ -1181,6 +1193,10 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isTablet = MediaQuery.of(context).size.shortestSide > 550;
+    final double portraitBarHeight = isTablet ? 90.0 : 70.0;
+    final double landscapePanelWidth = isTablet ? 240.0 : 180.0;
+
     return Scaffold(
       backgroundColor: const Color(0xFF0F172A),
       body: SafeArea(
@@ -1213,7 +1229,7 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height: 70,
+                                height: portraitBarHeight,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
@@ -1287,7 +1303,7 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                         ),
                       ),
                       Container(
-                        width: 180,
+                        width: landscapePanelWidth,
                         margin: const EdgeInsets.only(
                           top: 16,
                           bottom: 16,
@@ -1432,6 +1448,7 @@ class _PressableTrackpadButtonState extends State<PressableTrackpadButton> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isTablet = MediaQuery.of(context).size.shortestSide > 550;
     return Expanded(
       child: GestureDetector(
         onTapDown: (_) {
@@ -1465,7 +1482,7 @@ class _PressableTrackpadButtonState extends State<PressableTrackpadButton> {
                 color: _isPressed
                     ? const Color(0xFF6366F1)
                     : const Color(0xFF94A3B8),
-                size: 20,
+                size: isTablet ? 26 : 20,
               ),
               const SizedBox(height: 4),
               Text(
@@ -1474,7 +1491,7 @@ class _PressableTrackpadButtonState extends State<PressableTrackpadButton> {
                   color: _isPressed
                       ? const Color(0xFFF8FAFC)
                       : const Color(0xFF94A3B8),
-                  fontSize: 11,
+                  fontSize: isTablet ? 14 : 11,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.0,
                 ),
