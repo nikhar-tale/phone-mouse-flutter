@@ -1221,6 +1221,7 @@ class _TouchpadScreenState extends State<TouchpadScreen> {
                             ),
                           ),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Expanded(
                                 child: _buildTouchpadArea(
