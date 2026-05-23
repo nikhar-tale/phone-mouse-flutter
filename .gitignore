@@ -43,3 +43,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Python Server Build Artifacts
+/pc_server/venv/
+/pc_server/build/
+/pc_server/dist/
+/pc_server/__pycache__/
+/pc_server/*.spec
+
